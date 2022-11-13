@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/install
+
+Name: dialogflow
+Description: Description of dialogflow
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

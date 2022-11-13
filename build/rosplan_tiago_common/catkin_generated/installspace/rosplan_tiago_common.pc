@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/install
+
+Name: rosplan_tiago_common
+Description: Description of rosplan_tiago_common
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: rospy

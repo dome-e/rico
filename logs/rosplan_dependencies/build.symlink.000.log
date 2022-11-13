@@ -1,0 +1,7 @@
+Symlinking /home/dominika/tiago_public_ws/devel/lib/librddl_parser.so
+Symlinking /home/dominika/tiago_public_ws/devel/lib/libval_kcl.so
+Symlinking /home/dominika/tiago_public_ws/devel/lib/libippc_server.so
+Symlinking /home/dominika/tiago_public_ws/devel/lib/libppddl_parser.so
+Symlinking /home/dominika/tiago_public_ws/devel/lib/pkgconfig/rosplan_dependencies.pc
+Symlinking /home/dominika/tiago_public_ws/devel/share/rosplan_dependencies/cmake/rosplan_dependenciesConfig-version.cmake
+Symlinking /home/dominika/tiago_public_ws/devel/share/rosplan_dependencies/cmake/rosplan_dependenciesConfig.cmake

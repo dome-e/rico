@@ -1,0 +1,5 @@
+ros/tiago_interactions
+/home/dominika/tiago_public_ws/devel/.private/tiago_interactions/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/tiago_interactions/lib/pkgconfig/tiago_interactions.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/tiago_interactions.pc
+/home/dominika/tiago_public_ws/devel/.private/tiago_interactions/share/tiago_interactions/cmake/tiago_interactionsConfig.cmake /home/dominika/tiago_public_ws/devel/share/tiago_interactions/cmake/tiago_interactionsConfig.cmake
+/home/dominika/tiago_public_ws/devel/.private/tiago_interactions/share/tiago_interactions/cmake/tiago_interactionsConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/tiago_interactions/cmake/tiago_interactionsConfig-version.cmake

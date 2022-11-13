@@ -1,0 +1,7 @@
+set(tiago_smach_SETUP_PY_SETUP_MODULE "distutils.core")
+set(tiago_smach_SETUP_PY_VERSION "0.0.0")
+set(tiago_smach_SETUP_PY_SCRIPTS "")
+set(tiago_smach_SETUP_PY_PACKAGES "tiago_smach")
+set(tiago_smach_SETUP_PY_PACKAGE_DIRS "src/tiago_smach")
+set(tiago_smach_SETUP_PY_MODULES "")
+set(tiago_smach_SETUP_PY_MODULE_DIRS "")

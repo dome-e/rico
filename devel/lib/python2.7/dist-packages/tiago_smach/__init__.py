@@ -1,0 +1,1 @@
+/home/dominika/tiago_public_ws/devel/.private/tiago_smach/lib/python2.7/dist-packages/tiago_smach/__init__.py

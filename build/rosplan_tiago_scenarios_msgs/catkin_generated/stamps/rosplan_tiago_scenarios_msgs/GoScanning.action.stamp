@@ -1,0 +1,8 @@
+# Goal
+geometry_msgs/Pose pose
+---
+# Result
+# bool is_goal_accomplished
+---
+# feedback
+# float32 how_many_items_detected

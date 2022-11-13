@@ -1,0 +1,5 @@
+# Hashes of file build rules.
+baa834ea4050ab525dda9bf36beea8f6 lex.yy.cc
+3f77fa52a357046de12b1f81b3a76e08 parser.tab.cc
+3c0c6df5b670a5b23deef665f1f22346 ppddl_lex.yy.cc
+d4f6b1e7094bd6111e98f5db057b2f02 ppddl_parser.tab.cc

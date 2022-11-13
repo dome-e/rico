@@ -1,0 +1,1 @@
+/home/dominika/tiago_public_ws/devel/.private/tiago_msgs/share/roseus/ros/tiago_msgs/msg/SaySentenceResult.l

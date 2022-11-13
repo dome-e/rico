@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/pal_detection_msgs_generate_messages_py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_Detections2d.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_FaceDetections.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RotatedDetection2d.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_Obstacles.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsActionFeedback.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_TexturedObjectDetection.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_PersonDetection.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_Gesture.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsAction.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_WaveDetection.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizedActions.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_LegDetections.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_Detection2d.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_PersonDetections.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsGoal.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_FaceThermalDetections.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsActionGoal.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizedObjectArray.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsFeedback.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsResult.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_FaceDetection.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_Obstacle.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizeObjectsActionResult.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/_RecognizedObject.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_AddTexturedObject.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_SetDatabase.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_StartEnrollment.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_ChangeObjectRecognizerModel.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_Recognizer.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_SelectTexturedObject.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/_StopEnrollment.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/msg/__init__.py"
+  "/home/dominika/tiago_public_ws/devel/.private/pal_detection_msgs/lib/python2.7/dist-packages/pal_detection_msgs/srv/__init__.py"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/pal_detection_msgs_generate_messages_py.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

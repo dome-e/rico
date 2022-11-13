@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/install
+
+Name: rosplan_tiago_scenarios_msgs
+Description: Description of rosplan_tiago_scenarios_msgs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,7 @@
+set(pl_nouns_SETUP_PY_SETUP_MODULE "distutils.core")
+set(pl_nouns_SETUP_PY_VERSION "0.0.0")
+set(pl_nouns_SETUP_PY_SCRIPTS "")
+set(pl_nouns_SETUP_PY_PACKAGES "pl_nouns")
+set(pl_nouns_SETUP_PY_PACKAGE_DIRS "src/pl_nouns")
+set(pl_nouns_SETUP_PY_MODULES "")
+set(pl_nouns_SETUP_PY_MODULE_DIRS "")

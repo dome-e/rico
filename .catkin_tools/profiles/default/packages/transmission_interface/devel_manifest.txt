@@ -1,0 +1,8 @@
+pal/ros_control/transmission_interface
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/lib/libtransmission_interface_parser.so /home/dominika/tiago_public_ws/devel/lib/libtransmission_interface_parser.so
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/lib/libtransmission_interface_loader.so /home/dominika/tiago_public_ws/devel/lib/libtransmission_interface_loader.so
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/lib/libtransmission_interface_loader_plugins.so /home/dominika/tiago_public_ws/devel/lib/libtransmission_interface_loader_plugins.so
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/lib/pkgconfig/transmission_interface.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/transmission_interface.pc
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/share/transmission_interface/cmake/transmission_interfaceConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/transmission_interface/cmake/transmission_interfaceConfig-version.cmake
+/home/dominika/tiago_public_ws/devel/.private/transmission_interface/share/transmission_interface/cmake/transmission_interfaceConfig.cmake /home/dominika/tiago_public_ws/devel/share/transmission_interface/cmake/transmission_interfaceConfig.cmake

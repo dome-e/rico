@@ -1,0 +1,24 @@
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target _rosplan_tiago_core_msgs_generate_messages_check_deps_ROSPlanService
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target people_msgs_generate_messages_nodejs
+[  0%] Built target _rosplan_tiago_core_msgs_generate_messages_check_deps_GetLocation
+[  0%] Built target _rosplan_tiago_core_msgs_generate_messages_check_deps_GetHuman
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target people_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target people_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target people_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target people_msgs_generate_messages_py
+[ 16%] Built target rosplan_tiago_core_msgs_generate_messages_nodejs
+[ 33%] Built target rosplan_tiago_core_msgs_generate_messages_cpp
+[ 55%] Built target rosplan_tiago_core_msgs_generate_messages_eus
+[ 72%] Built target rosplan_tiago_core_msgs_generate_messages_lisp
+[100%] Built target rosplan_tiago_core_msgs_generate_messages_py
+[100%] Built target rosplan_tiago_core_msgs_generate_messages

@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/devel/.private/tiago_task_manager
+
+Name: tiago_task_manager
+Description: Description of tiago_task_manager
+Version: 0.1.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: tiago_msgs

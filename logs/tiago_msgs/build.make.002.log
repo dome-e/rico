@@ -1,0 +1,23 @@
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceGoal
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_HazardObject
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_Command
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceActionResult
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceActionGoal
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_CaseInstance
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceAction
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_DictionaryQuery
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceResult
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_DynAgentDiag
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceActionFeedback
+[  0%] Built target _tiago_msgs_generate_messages_check_deps_SaySentenceFeedback
+[  0%] Built target actionlib_msgs_generate_messages_py
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[ 19%] Built target tiago_msgs_generate_messages_lisp
+[ 41%] Built target tiago_msgs_generate_messages_py
+[ 60%] Built target tiago_msgs_generate_messages_nodejs
+[ 79%] Built target tiago_msgs_generate_messages_cpp
+[100%] Built target tiago_msgs_generate_messages_eus
+[100%] Built target tiago_msgs_generate_messages

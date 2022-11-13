@@ -1,0 +1,6 @@
+rcprg/pl_nouns
+/home/dominika/tiago_public_ws/devel/.private/pl_nouns/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/pl_nouns/lib/python2.7/dist-packages/pl_nouns/__init__.py /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/pl_nouns/__init__.py
+/home/dominika/tiago_public_ws/devel/.private/pl_nouns/lib/pkgconfig/pl_nouns.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/pl_nouns.pc
+/home/dominika/tiago_public_ws/devel/.private/pl_nouns/share/pl_nouns/cmake/pl_nounsConfig.cmake /home/dominika/tiago_public_ws/devel/share/pl_nouns/cmake/pl_nounsConfig.cmake
+/home/dominika/tiago_public_ws/devel/.private/pl_nouns/share/pl_nouns/cmake/pl_nounsConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/pl_nouns/cmake/pl_nounsConfig-version.cmake

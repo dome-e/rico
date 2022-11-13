@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/devel/.private/tiago_interactions
+
+Name: tiago_interactions
+Description: Description of tiago_interactions
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,1 @@
+/home/dominika/tiago_public_ws/devel/.private/pardon_action_server/share/common-lisp/ros/pardon_action_server/msg/TurnToHumanResult.lisp

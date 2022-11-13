@@ -1,0 +1,5 @@
+Linked: (/home/dominika/tiago_public_ws/devel/.private/controller_manager/lib/libcontroller_manager.so, /home/dominika/tiago_public_ws/devel/lib/libcontroller_manager.so)
+Linked: (/home/dominika/tiago_public_ws/devel/.private/controller_manager/lib/python2.7/dist-packages/controller_manager/__init__.py, /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/controller_manager/__init__.py)
+Linked: (/home/dominika/tiago_public_ws/devel/.private/controller_manager/lib/pkgconfig/controller_manager.pc, /home/dominika/tiago_public_ws/devel/lib/pkgconfig/controller_manager.pc)
+Linked: (/home/dominika/tiago_public_ws/devel/.private/controller_manager/share/controller_manager/cmake/controller_managerConfig-version.cmake, /home/dominika/tiago_public_ws/devel/share/controller_manager/cmake/controller_managerConfig-version.cmake)
+Linked: (/home/dominika/tiago_public_ws/devel/.private/controller_manager/share/controller_manager/cmake/controller_managerConfig.cmake, /home/dominika/tiago_public_ws/devel/share/controller_manager/cmake/controller_managerConfig.cmake)

@@ -1,0 +1,5 @@
+ros/dialogflow
+/home/dominika/tiago_public_ws/devel/.private/dialogflow/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/dialogflow/lib/pkgconfig/dialogflow.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/dialogflow.pc
+/home/dominika/tiago_public_ws/devel/.private/dialogflow/share/dialogflow/cmake/dialogflowConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/dialogflow/cmake/dialogflowConfig-version.cmake
+/home/dominika/tiago_public_ws/devel/.private/dialogflow/share/dialogflow/cmake/dialogflowConfig.cmake /home/dominika/tiago_public_ws/devel/share/dialogflow/cmake/dialogflowConfig.cmake

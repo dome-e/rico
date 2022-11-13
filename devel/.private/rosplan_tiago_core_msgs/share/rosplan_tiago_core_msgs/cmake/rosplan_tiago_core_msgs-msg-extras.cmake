@@ -1,0 +1,2 @@
+set(rosplan_tiago_core_msgs_MESSAGE_FILES "/home/dominika/tiago_public_ws/src/rcprg/rosplan_interface_tiago/rosplan_tiago_msgs/rosplan_tiago_core_msgs/msg/ROSPlanService.msg")
+set(rosplan_tiago_core_msgs_SERVICE_FILES "/home/dominika/tiago_public_ws/src/rcprg/rosplan_interface_tiago/rosplan_tiago_msgs/rosplan_tiago_core_msgs/srv/GetHuman.srv;/home/dominika/tiago_public_ws/src/rcprg/rosplan_interface_tiago/rosplan_tiago_msgs/rosplan_tiago_core_msgs/srv/GetLocation.srv")

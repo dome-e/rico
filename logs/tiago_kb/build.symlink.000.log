@@ -1,0 +1,4 @@
+Symlinking /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/tiago_kb/__init__.py
+Symlinking /home/dominika/tiago_public_ws/devel/lib/pkgconfig/tiago_kb.pc
+Symlinking /home/dominika/tiago_public_ws/devel/share/tiago_kb/cmake/tiago_kbConfig-version.cmake
+Symlinking /home/dominika/tiago_public_ws/devel/share/tiago_kb/cmake/tiago_kbConfig.cmake

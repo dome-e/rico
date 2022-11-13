@@ -1,0 +1,2 @@
+set(pal_statistics_msgs_MESSAGE_FILES "/home/dominika/tiago_public_ws/src/pal/pal_statistics/pal_statistics_msgs/msg/Statistic.msg;/home/dominika/tiago_public_ws/src/pal/pal_statistics/pal_statistics_msgs/msg/Statistics.msg;/home/dominika/tiago_public_ws/src/pal/pal_statistics/pal_statistics_msgs/msg/StatisticsNames.msg;/home/dominika/tiago_public_ws/src/pal/pal_statistics/pal_statistics_msgs/msg/StatisticsValues.msg")
+set(pal_statistics_msgs_SERVICE_FILES "")

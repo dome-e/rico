@@ -1,0 +1,4 @@
+Symlinking /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/tiago_smach/__init__.py
+Symlinking /home/dominika/tiago_public_ws/devel/lib/pkgconfig/tiago_smach.pc
+Symlinking /home/dominika/tiago_public_ws/devel/share/tiago_smach/cmake/tiago_smachConfig-version.cmake
+Symlinking /home/dominika/tiago_public_ws/devel/share/tiago_smach/cmake/tiago_smachConfig.cmake

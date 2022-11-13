@@ -1,0 +1,8 @@
+# Goal
+string human
+---
+# Result
+# bool is_human_informed
+---
+# feedback
+# float32 percent_of_knowledge_given

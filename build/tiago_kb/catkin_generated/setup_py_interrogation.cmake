@@ -1,0 +1,7 @@
+set(tiago_kb_SETUP_PY_SETUP_MODULE "distutils.core")
+set(tiago_kb_SETUP_PY_VERSION "0.0.0")
+set(tiago_kb_SETUP_PY_SCRIPTS "")
+set(tiago_kb_SETUP_PY_PACKAGES "tiago_kb")
+set(tiago_kb_SETUP_PY_PACKAGE_DIRS "src/tiago_kb")
+set(tiago_kb_SETUP_PY_MODULES "")
+set(tiago_kb_SETUP_PY_MODULE_DIRS "")

@@ -1,0 +1,1 @@
+/home/dominika/tiago_public_ws/devel/.private/rosplan_tiago_params/lib/python2.7/dist-packages/rosplan_tiago_params/__init__.py

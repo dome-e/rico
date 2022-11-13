@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/install
+
+Name: tiago_behaviours_msgs
+Description: Description of tiago_behaviours_msgs
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

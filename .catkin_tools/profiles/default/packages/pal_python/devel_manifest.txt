@@ -1,0 +1,6 @@
+pal/pal_python
+/home/dominika/tiago_public_ws/devel/.private/pal_python/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/pal_python/lib/python2.7/dist-packages/pal_python/__init__.py /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/pal_python/__init__.py
+/home/dominika/tiago_public_ws/devel/.private/pal_python/lib/pkgconfig/pal_python.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/pal_python.pc
+/home/dominika/tiago_public_ws/devel/.private/pal_python/share/pal_python/cmake/pal_pythonConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/pal_python/cmake/pal_pythonConfig-version.cmake
+/home/dominika/tiago_public_ws/devel/.private/pal_python/share/pal_python/cmake/pal_pythonConfig.cmake /home/dominika/tiago_public_ws/devel/share/pal_python/cmake/pal_pythonConfig.cmake

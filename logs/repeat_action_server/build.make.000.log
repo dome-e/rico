@@ -1,0 +1,47 @@
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatAction[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatAction
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionGoal[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionGoal
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionResult[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionResult
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatResult[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatResult
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatGoal[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatGoal
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatFeedback[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatFeedback
+[35m[1mScanning dependencies of target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionFeedback[0m
+[  0%] Built target _repeat_action_server_generate_messages_check_deps_AskToRepeatActionFeedback
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[  0%] Built target std_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[  0%] Built target actionlib_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[  0%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[  0%] Built target actionlib_msgs_generate_messages_py
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[  0%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[  0%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target repeat_action_server[0m
+[  2%] [32mBuilding CXX object CMakeFiles/repeat_action_server.dir/src/main.cxx.o[0m
+In file included from [01m[K/home/dominika/tiago_public_ws/src/ros/repeat_action_server/src/main.cxx:2:0[m[K:
+[01m[K/home/dominika/tiago_public_ws/src/ros/repeat_action_server/include/repeat_action_server/AskToRepeatActionServer.h:8:9:[m[K [01;31m[Kfatal error: [m[Krepeat_action_server/AskToRepeatAction.h: No such file or directory
+ #include[01;31m[K<repeat_action_server/AskToRepeatAction.h>[m[K
+         [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+CMakeFiles/repeat_action_server.dir/build.make:62: recipe for target 'CMakeFiles/repeat_action_server.dir/src/main.cxx.o' failed
+CMakeFiles/Makefile2:2548: recipe for target 'CMakeFiles/repeat_action_server.dir/all' failed
+Makefile:129: recipe for target 'all' failed
+make[2]: *** [CMakeFiles/repeat_action_server.dir/src/main.cxx.o] Error 1
+make[1]: *** [CMakeFiles/repeat_action_server.dir/all] Error 2
+make: *** [all] Error 2

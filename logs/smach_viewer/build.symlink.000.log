@@ -1,0 +1,4 @@
+Symlinking /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/smach_viewer/__init__.py
+Symlinking /home/dominika/tiago_public_ws/devel/lib/pkgconfig/smach_viewer.pc
+Symlinking /home/dominika/tiago_public_ws/devel/share/smach_viewer/cmake/smach_viewerConfig-version.cmake
+Symlinking /home/dominika/tiago_public_ws/devel/share/smach_viewer/cmake/smach_viewerConfig.cmake

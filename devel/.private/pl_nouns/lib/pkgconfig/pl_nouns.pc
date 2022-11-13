@@ -1,0 +1,8 @@
+prefix=/home/dominika/tiago_public_ws/devel/.private/pl_nouns
+
+Name: pl_nouns
+Description: Description of pl_nouns
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

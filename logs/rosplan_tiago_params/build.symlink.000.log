@@ -1,0 +1,4 @@
+Symlinking /home/dominika/tiago_public_ws/devel/lib/python2.7/dist-packages/rosplan_tiago_params/__init__.py
+Symlinking /home/dominika/tiago_public_ws/devel/lib/pkgconfig/rosplan_tiago_params.pc
+Symlinking /home/dominika/tiago_public_ws/devel/share/rosplan_tiago_params/cmake/rosplan_tiago_paramsConfig-version.cmake
+Symlinking /home/dominika/tiago_public_ws/devel/share/rosplan_tiago_params/cmake/rosplan_tiago_paramsConfig.cmake

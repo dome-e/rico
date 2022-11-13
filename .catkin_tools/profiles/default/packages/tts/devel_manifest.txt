@@ -1,0 +1,5 @@
+pal/tiago_tutorials/tts
+/home/dominika/tiago_public_ws/devel/.private/tts/cmake.lock /home/dominika/tiago_public_ws/devel/./cmake.lock
+/home/dominika/tiago_public_ws/devel/.private/tts/lib/pkgconfig/tts.pc /home/dominika/tiago_public_ws/devel/lib/pkgconfig/tts.pc
+/home/dominika/tiago_public_ws/devel/.private/tts/share/tts/cmake/ttsConfig.cmake /home/dominika/tiago_public_ws/devel/share/tts/cmake/ttsConfig.cmake
+/home/dominika/tiago_public_ws/devel/.private/tts/share/tts/cmake/ttsConfig-version.cmake /home/dominika/tiago_public_ws/devel/share/tts/cmake/ttsConfig-version.cmake
