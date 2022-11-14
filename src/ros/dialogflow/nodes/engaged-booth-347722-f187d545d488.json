@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "engaged-booth-347722",
+  "private_key_id": "f187d545d488b4a75b2f4eefbb9e9a2755d3ec9b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCqZyr+POCVwDxP\ntpHMWC4ecRfo2cZ3g2iw8DrnoBkyESp2JOZUwH6KYpgJxws6wsatuJuI3eIiCFNE\nk76BpEHiy+TAPQBLMwkdKjZGaL45d4j+l8RCTBR6lAcyq3DVRTTnoRjuvmg2UiOW\nM8j+vl318PirZwSpGBNJ9oOLDT5FD5N0rcpWwLOLfYOterNbEpGLeYe5Epl5e2i7\nP8Ml3Q+kYLURevCupDLA/DrEscyugFeZIl2OS0IS7cJFy6njXnGFrSGz5tsADQTu\neCG7mUklYZc3YlPdYG2FKF94bIQHiiv90fK8qEFrVgGBgjQivW6PVaxwC7j2kHXz\nYc5DLOn5AgMBAAECggEAA2yYzmyUDI/rgyRb6C0PQJdzTH+dAreBi4Kvg4pYT0UA\niZWJI/bzsNC1fCBp+M32sGfkBwgcaSSQYpgMc6FeUJInBqtP8PLo2GzwRvhuXPKQ\n7m36zxelY4D+s9Vo0LEeev2yzFAuGtKKOm4c3rk3fQx3VsYDPJzW/TBZ6UBEhtGc\n3UlqYb5lkpaG+8QHNuQlKjCb24b9xNODpohvquSRGvAF7qOi46qT/DbhIoMnWr7C\nvTItmE96fA6LsvzAUi4u6BdNSZWnVKBgflwPlMlWVYABM/PB5TeiSqlilcHvP0VB\nhfL81IDEuUieV8Z0MN3JInFsHFxqcnNrBnSMMjq/fQKBgQDTwoGmMtZZGhF0OZ36\n2fc8MgREt6uVtRf2GSquvPrZEFWAskYnhbyAdERx6absH+MmATqXuG7kIF/aK0qh\nwJ/VmovJa3z1eXVZjVSWsiamYP1ZOs3rZIyf54Qspo2YQLbwC6MZf6vTb/CL1KJz\nFyzmCy4bvyFTpOay4SyUMNTr1QKBgQDOAMl8QTvAFQKDTzy0NF66C6247xnX3HAH\nfJjbCj0og2/9vw47pPhdcNoVqP/XpQOtrhTuVqX83Ow2jWW1d0EQ1CleGQOE1zur\n0cbDZAKEqycE1cca5/kYSn8INhWBH9hCpEeZKOzphnag9QWgp/bl6hI1+5+pWgxN\nXURAtueLlQKBgD4dmBpAX0/TrbsCC61Bspwdr9LYbaSEcnrl9vc6x/pUKECQCrQd\nLqYfdNRVTXmGAQNs6NsIZr7UIEnG2SWJc1kc9FQpC4aWEi4qnt11dJDpcmdyMGUU\nIYvmRYczc+VtVjwjrbwVDzn+Y/kgbmaELc9tCCFrd0Mp4+Ik2wa9LDfhAoGAITZT\nRasmvPMmMpFl0g/XbdtQKM6zte+eSDa4VigycAOw3JIe81LHkBkPsApNJTE/hJLa\nYQqrPDdKBgmJ6lXNsa7i9H7H6HTi8/KgPwQyu7z0T30/2oCn0ljAXkyJ7wV5UlU2\nDeVhPM0m9xBJ1fr+fVbdlMJ6nU0dSqPMyzox3nkCgYBamMBAdt4fjAfLWRWPWe0a\nnQiUUdIxKP8Dfmmq8zf2WqK8rLAuo+01LRId7wQWAW80EaY9nef6IhDvlamQO4Pl\nL7CaqN7Li/oJsfeQ61lg2cSqS8eiuk1jlM6QKOl05mkqh/qm6Ub0Z+QVYuOnIi1j\nZkOQxU0PykzNWT8aSBi6XA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "rico-dominika@engaged-booth-347722.iam.gserviceaccount.com",
+  "client_id": "109048988611393831395",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rico-dominika%40engaged-booth-347722.iam.gserviceaccount.com"
+}
