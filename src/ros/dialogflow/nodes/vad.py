@@ -137,6 +137,7 @@ class PorcupineDemo(Thread):
         self.__activate_vad_received = False
         self.__vad_enabled           = True
         self.run_once                = False
+        # self.access_key              = "aDd541fQUB9+vb6KqcWV7kMBEvOkHQGV/bg7Z/1pbE1gcS0TmHzpYA=="
         
         self._output_path = output_path
         if self._output_path is not None:
@@ -232,7 +233,8 @@ class PorcupineDemo(Thread):
         wav_file = wave.open(file_name, mode="rb")
         channels = wav_file.getnchannels()
         num_frames = wav_file.getnframes()
-
+        print("num frames of file")
+        print(num_frames)
         if wav_file.getframerate() != sample_rate:
             raise ValueError("Audio file should have a sample rate of %d. got %d" % (sample_rate, wav_file.getframerate()))
 
@@ -312,18 +314,18 @@ class PorcupineDemo(Thread):
             print("set all the porcupine audio channels")
 
             # configure audio stream
-            pa = pyaudio.PyAudio()
-            audio_stream = pa.open(
-                rate                = SAMPLE_RATE_REC,
-                channels            = 2,
-                format              = pyaudio.paInt16,
-                input               = True,
-                output              = True,
-                frames_per_buffer   = porcupine_l.frame_length,
-                # input_device_index  = self._input_device_index,
-                # output_device_index = self._input_device_index,
-                stream_callback     = self.audio_callback
-            )
+            # pa = pyaudio.PyAudio()
+            # audio_stream = pa.open(
+            #     rate                = SAMPLE_RATE_REC,
+            #     channels            = 2,
+            #     format              = pyaudio.paInt16,
+            #     input               = True,
+            #     output              = True,
+            #     frames_per_buffer   = porcupine_l.frame_length,
+            #     # input_device_index  = self._input_device_index,
+            #     # output_device_index = self._input_device_index,
+            #     stream_callback     = self.audio_callback
+            # )
 
             print("configured all audio streams")
 
@@ -337,18 +339,39 @@ class PorcupineDemo(Thread):
 
             print("stream opened")
 
-            audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/Bagno.wav"
-            audio = self.read_file(audio_path, porcupine_l.sample_rate)
-            num_frames = len(audio) // porcupine_l.frame_length
+            porcupine = porcupine_r
+
+            audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/test_recordings/2.5m.wav"
+            audio = self.read_file(audio_path, porcupine.sample_rate)
+            print("len audio")
+            print(len(audio))
+            num_frames = len(audio) // porcupine.frame_length
+
+            print("num_frames")
+            print(num_frames)
+            print("frane ken")
+            print(porcupine.frame_length)
 
             print("got audio and num_frames")
             for i in range(num_frames):
-                frame = audio[i * porcupine_l.frame_length:(i + 1) * porcupine_l.frame_length]
-                result = porcupine_l.process(frame)
+                frame = audio[i * porcupine.frame_length : (i + 1) * porcupine_l.frame_length]
+                # result = porcupine_l.process(frame)
+                print("im ere")
+                result = porcupine.process(frame)
+
                 if result >= 0:
                     print("Detected '%s' at %.2f sec" %
-                    (keyword_names[result], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
-
+                    (keyword_names[result], float(i * porcupine.frame_length) / float(porcupine_l.sample_rate)))
+                    # out_stream = pa.open(
+                    #     format   = pa.get_format_from_width(wf.getsampwidth()),
+                    #     channels = wf.getnchannels(),
+                    #     rate     = wf.getframerate(),
+                    #     output   = True
+                    # )
+                    # out_stream.write(wav_data)
+                    # pa.close()
+                    # porcupine_l.delete()
+                    break
 
             while False:
                 if has_ros and rospy.is_shutdown():
@@ -612,14 +635,21 @@ def main():
     parser.add_argument('--show_audio_devices_info',  action='store_true')
     PorcupineDemo.show_audio_devices_info()
 
-    keywords=['hey rico']
+    # keywords=['hey rico']
+    keywords=['alexa']
+
+    # keyword_file_paths = ["/home/dominika/tiago_public_ws/src/ros/dialogflow/Hey-Rico_en_linux_v2_1_0.ppn"]
+    
     if all(x in KEYWORDS for x in keywords):
         keyword_file_paths = [KEYWORD_FILE_PATHS[x] for x in keywords]
     else:
         raise ValueError('selected keywords are not available by default. available keywords are: %s' % ', '.join(KEYWORDS))
     
-    sensitivities = [0.5]
-
+    sensitivities = [0.1]
+    print("LIB PATH")
+    print(LIBRARY_PATH)
+    print("MODEL PATH")
+    print((MODEL_FILE_PATH))
     PorcupineDemo(
         library_path=LIBRARY_PATH,
         model_file_path=MODEL_FILE_PATH,
@@ -627,6 +657,7 @@ def main():
         sensitivities=sensitivities,
         # output_path='/tmp/out.wav',
         input_device_index=DEVICE_ID
+
     ).run()
 
 if __name__ == '__main__':
