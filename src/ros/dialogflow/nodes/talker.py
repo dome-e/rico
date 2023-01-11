@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf8
 
+import platform
 import threading
 import rospy
 import actionlib
@@ -221,6 +222,7 @@ def convert_audio_to_text(audio_file_path, language_code):
     transcription = ""
     confidence = 0.0
     cloud_response = client.recognize(config=config, audio=audio)
+    print("CLOUSD RESPONZE")
     print(cloud_response)
     try:
         for result in cloud_response.results:
@@ -559,6 +561,7 @@ def callback(data, agent_name, playback_queue, cred_file):
 def callback_wav(data, agent_name, playback_queue, cred_file):
     rospy.loginfo("I recorded %s", data.data)
 
+    print("callback_wav from subscriber :33")
     # Speech-to-Text version:
     # response, sound_file = detect_intent_audio(agent_name, "test_sess_012", data.data, "pl", cred_file)
 
@@ -648,6 +651,10 @@ class Odmieniacz:
         return result
 
 def listener():
+    print("TALKER STARTING....")
+    print("python version")
+    print(platform.python_version())
+
     rospy.init_node('talker', anonymous=True)
 
     odm = Odmieniacz()

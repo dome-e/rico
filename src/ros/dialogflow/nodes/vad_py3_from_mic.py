@@ -1,8 +1,7 @@
+
 #!/usr/bin/python3.6
 # encoding: utf8
 
-# OLD SHEBANG; /usr/bin/env python
-#
 # Copyright 2018 Picovoice Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +18,10 @@
 #
 
 import argparse
+from asyncio import queues
+from calendar import c
 import itertools
+import multiprocessing
 import os
 import struct
 import sys
@@ -200,9 +202,12 @@ class PorcupineDemo(Thread):
         return output
 
     def audio_callback(self, in_data, frame_count, time_info, status):
+        print("went into audio_callback!!")
+
         decoded_block = np.fromstring(in_data, 'Int16')
         channel_left  = decoded_block[0::2]
         channel_right = decoded_block[1::2]
+
 
         def process_channel(block):
             # pack(format, v1, v2, ...) - returns bytes object containing v1,v2,... packed according to format
@@ -215,7 +220,11 @@ class PorcupineDemo(Thread):
         (orig_left, filter_left)   = process_channel(channel_left)
         (orig_right, filter_right) = process_channel(channel_right)
         
+        print("audio_callback!! :33")
+        print("play_name?? UwU")
+        print(self.play_name)
         if self.play_name == '':
+            print("PUTTING INTO recorded_frames")
             self.recorded_frames.put({
                 'orig_l': orig_left,
                 'filt_l': filter_left,
@@ -224,7 +233,7 @@ class PorcupineDemo(Thread):
             })
         
         output = self.get_next_frame()
-        return output, pyaudio.paContinue
+        return (output, pyaudio.paContinue)
 
     def quickplay(self, pa, data, wf):
         out_stream = pa.open(
@@ -315,6 +324,25 @@ class PorcupineDemo(Thread):
 
             print("set all the porcupine audio channels")
 
+            # configure audio stream
+            pa = pyaudio.PyAudio()
+            audio_stream = pa.open(
+                rate                = SAMPLE_RATE_REC,
+                # channels            = 2,
+                channels              = 1,
+                # format              = pyaudio.paInt16,
+                format=pa.get_format_from_width(wf.getsampwidth()),
+                input               = True,
+                output              = True,
+                frames_per_buffer   = porcupine_l.frame_length,
+                # input_device_index  = self._input_device_index,
+                # output_device_index = self._input_device_index,
+                stream_callback     = self.audio_callback
+            )
+
+
+            print("configured all audio streams")
+
             # open stream based on the wave object which has been input.
             wav_data           = wf.readframes(-1)
             wav2_data          = wg.readframes(-1)
@@ -382,30 +410,30 @@ class PorcupineDemo(Thread):
                         print("Detected '%s' at %.2f sec" %
                         (keyword_names[result], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
 
-                # print("po for ;3")
-                # pcm_l = frame['orig_l']
-                # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
-                # result_l = porcupine_l.process(pcm_l)
+                        # print("po for ;3")
+                        # pcm_l = frame['orig_l']
+                        # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                        # # result_l = porcupine_l.process(pcm_l)
 
-                # if self._output_path is not None:
-                #     self._recorded_frames_left.append(pcm_l)
+                        # if self._output_path is not None:
+                        #     self._recorded_frames_left.append(pcm_l)
 
-                # pcm_r = frame['orig_r']
-                # pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
-                # result_r = porcupine_r.process(pcm_r)
+                        # # pcm_r = frame['orig_r']
+                        # pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
+                        # # result_r = porcupine_r.process(pcm_r)
 
-                # if self._output_path is not None:
-                #     self._recorded_frames_right.append(pcm_r)
-                    
-                # pcm_l2 = frame['filt_l']
-                # pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
-                # result_l2 = porcupine_l2.process(pcm_l2)
+                        # if self._output_path is not None:
+                        #     self._recorded_frames_right.append(pcm_r)
+                            
+                        # pcm_l2 = frame['filt_l']
+                        # pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
+                        # # result_l2 = porcupine_l2.process(pcm_l2)
 
-                # pcm_r2 = frame['filt_r']
-                # pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
-                # result_r2 = porcupine_r2.process(pcm_r2)
+                        # pcm_r2 = frame['filt_r']
+                        # pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
+                        # result_r2 = porcupine_r2.process(pcm_r2)
 
-                # result = max(result_l, result_l2, result_r, result_r2)
+                        # result = max(result_l, result_l2, result_r, result_r2)
                     
                         print("true pr false")
 
@@ -420,7 +448,6 @@ class PorcupineDemo(Thread):
                         print("result")
                         print(result)
 
-                print((self.__vad_enabled and ( (num_keywords == 1 and result) or self.__activate_vad_received )) or self.run_once)
                 if (self.__vad_enabled and ( (num_keywords == 1 and result) or self.__activate_vad_received )) or self.run_once:
                     print('[%s] detected keyword' % str(datetime.now()))
                     self.run_once = False
@@ -435,7 +462,18 @@ class PorcupineDemo(Thread):
                     print("record human voice")
 
                     self.play_name ='on'
-                    self.runvad()
+                    print("before runvad")
+                    # self.runvad()
+                    fname = "/home/dominika/Downloads/record.wav"
+                    if has_ros:
+                        rospy.loginfo(fname)
+                        rospy.sleep(10)
+                        print("connectrions:")
+                        print(self.pub.get_num_connections())
+
+                        self.pub.publish(fname)
+
+                    print("after runvad")
                     self.play_name='off'
                     self.__activate_vad_received = False
                     break
@@ -511,6 +549,9 @@ class PorcupineDemo(Thread):
         StartTime      = time.time()
         TimeUse        = 0
         cancelled      = False
+
+        print("python version")
+        print(platform.python_version())
         print("* recording: ")
 
         num_unv = 0
@@ -518,22 +559,31 @@ class PorcupineDemo(Thread):
         while not got_a_sentence and TimeUse <= THR_TIME:
             if not self.__vad_enabled:
                 cancelled = True
+                print("cancelled .")
                 break
 
             try:
+                # print("is empty?")
+                # print(self.recorded_frames.empty())
                 data = self.recorded_frames.get(block=False)
+                    # Queue.get returns an Empty exception when the item in the 
+                    # queue is not available
             except:
+                # print('STH WENT WRONG??')
                 continue
 
             if ignore > 0:
+                print("went into ignore")
                 ignore = ignore - 1
                 continue
 
+            print("reading chinks")
             chunk_left       = data['orig_l']
             chunk_right      = data['orig_r']
             filtered_left    = data['filt_l'][0:960]
             filtered_right   = data['filt_r'][0:960]
 
+            print("chunk_left")
             decoded_block_left  = np.fromstring(filtered_left, 'Int16')
             decoded_block_right = np.fromstring(filtered_right, 'Int16')
  
