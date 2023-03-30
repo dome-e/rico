@@ -358,7 +358,9 @@ class PorcupineDemo(Thread):
                 try:
                     # frame = self.recorded_frames.get(block=False)
                     # audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/Bagno.wav"
-                    audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/test_recordings/1m.wav"
+                    # audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/test_recordings/1m.wav"
+                    audio_path = "/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/data/test_recordings/1m.wav"
+                    
                     # print("went into try")
                     # print("slayy")
                     audio = self.read_file(audio_path, porcupine.sample_rate)
@@ -653,7 +655,9 @@ def main():
     # keywords=['alexa']
 
     access_key='aDd541fQUB9+vb6KqcWV7kMBEvOkHQGV/bg7Z/1pbE1gcS0TmHzpYA=='
-    keyword_file_paths = ["/home/dominika/tiago_public_ws/src/ros/dialogflow/Hey-Rico_en_linux_v2_1_0.ppn"]
+    # keyword_file_paths = ["/home/dominika/tiago_public_ws/src/ros/dialogflow/Hey-Rico_en_linux_v2_1_0.ppn"]
+    keyword_file_paths = ["/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/Hey-Rico_en_linux_v2_1_0.ppn"]
+
     
     # if all(x in KEYWORDS for x in keywords):
     #     keyword_file_paths = [KEYWORD_FILE_PATHS[x] for x in keywords]
