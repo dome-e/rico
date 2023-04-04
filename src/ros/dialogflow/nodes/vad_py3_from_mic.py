@@ -23,10 +23,12 @@ from calendar import c
 import itertools
 import multiprocessing
 import os
+import string
 import struct
 import sys
 from datetime import datetime
 from threading import Thread
+from unittest import result
 
 import numpy as np
 import pyaudio
@@ -327,7 +329,7 @@ class PorcupineDemo(Thread):
             # configure audio stream
             pa = pyaudio.PyAudio()
             audio_stream = pa.open(
-                rate                = SAMPLE_RATE_REC,
+                rate                = 44100,
                 # channels            = 2,
                 channels              = 1,
                 # format              = pyaudio.paInt16,
@@ -335,9 +337,9 @@ class PorcupineDemo(Thread):
                 input               = True,
                 output              = True,
                 frames_per_buffer   = porcupine_l.frame_length,
-                # input_device_index  = self._input_device_index,
+                input_device_index  = 4,
                 # output_device_index = self._input_device_index,
-                stream_callback     = self.audio_callback
+                stream_callback     = self.audio_callback,
             )
 
 
@@ -355,99 +357,81 @@ class PorcupineDemo(Thread):
 
             porcupine = porcupine_l
 
-            # audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/test_recordings/1m.wav"
-            # audio = self.read_file(audio_path, porcupine.sample_rate)
-            # print("len audio")
-            # print(len(audio))
-            # num_frames = len(audio) // porcupine.frame_length
+            frames = []
 
-            # print("num_frames")
-            # print(num_frames)
-            # print("frane ken")
-            # print(porcupine.frame_length)
-
-            # print("got audio and num_frames")
-
-
-
-            # for i in range(num_frames):
-            #     frame = audio[i * porcupine.frame_length : (i + 1) * porcupine_l.frame_length]
-            #     result = porcupine.process(frame)
-
-            #     if result >= 0:
-            #         print("Detected '%s' at %.2f sec" %
-            #         (keyword_names[result], float(i * porcupine.frame_length) / float(porcupine_l.sample_rate)))
-            #         break
-
-            # while False:
             while True:
                 if has_ros and rospy.is_shutdown():
                     break
                 try:
-                    # frame = self.recorded_frames.get(block=False)
-                    # audio_path = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/Bagno.wav"
-                    # audio_path  = "/home/dominika/tiago_public_ws/src/ros/dialogflow/data/test_recordings/1m.wav"
-                    audio_path = "/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/data/test_recordings/1m.wav"
-                    # print("went into try")
-                    # print("slayy")
-                    audio = self.read_file(audio_path, porcupine.sample_rate)
-                    # print(porcupine.frame_)
-                    num_frames = len(audio) // porcupine.frame_length
-                    # print("miau miau")
-                    # print("num_frmaes")
-                    # print(num_frames)
+                    # for mic
+                    frame = self.recorded_frames.get(block=False)
+                    
+                    # for file
+                    # audio_path = "/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/data/test_recordings/1m.wav"
+                    # audio = self.read_file(audio_path, porcupine.sample_rate)
+                    # num_frames = len(audio) // porcupine.frame_length
+
                 except:
                     continue
 
-                
                 print("przed for")
 
-                for i in range(num_frames):
-                    frame = audio[i * porcupine_l.frame_length:(i + 1) * porcupine_l.frame_length]
-                    result = porcupine_l.process(frame)
-                    if result >= 0:
-                        print("result")
-                        print(result)
-                        print("Detected '%s' at %.2f sec" %
-                        (keyword_names[result], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
+                # for i in range(num_frames):
 
-                        # print("po for ;3")
-                        # pcm_l = frame['orig_l']
-                        # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
-                        # # result_l = porcupine_l.process(pcm_l)
+                pcm_l = frame['orig_l']
+                print("type of pcm")
+                print(type(pcm_l))
+                pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                result = porcupine_l.process(pcm_l)
 
-                        # if self._output_path is not None:
-                        #     self._recorded_frames_left.append(pcm_l)
+                if self._output_path is not None:
+                    self._recorded_frames_left.append(pcm_l)
 
-                        # # pcm_r = frame['orig_r']
-                        # pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
-                        # # result_r = porcupine_r.process(pcm_r)
+                print("before checking result")
 
-                        # if self._output_path is not None:
-                        #     self._recorded_frames_right.append(pcm_r)
-                            
-                        # pcm_l2 = frame['filt_l']
-                        # pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
-                        # # result_l2 = porcupine_l2.process(pcm_l2)
+                if result >= 0:
+                    print("result")
+                    print(result)
+                    print("Detected '%s' at %.2f sec" %
+                    (keyword_names[result], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
 
-                        # pcm_r2 = frame['filt_r']
-                        # pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
-                        # result_r2 = porcupine_r2.process(pcm_r2)
+                    # print("po for ;3")
+                    # pcm_l = frame['orig_l']
+                    # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                    # # result_l = porcupine_l.process(pcm_l)
 
-                        # result = max(result_l, result_l2, result_r, result_r2)
-                    
-                        print("true pr false")
+                    # if self._output_path is not None:
+                    #     self._recorded_frames_left.append(pcm_l)
 
-                        print("full boolean")
-                        print((self.__vad_enabled and ( (num_keywords == 1 and result) or self.__activate_vad_received )) or self.run_once)
+                    # # pcm_r = frame['orig_r']
+                    # pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
+                    # # result_r = porcupine_r.process(pcm_r)
 
-                        print("vad_enabled")
-                        print(self.__vad_enabled)
-                        print("num_keywords")
-                        print(num_keywords)
-                        print(num_keywords == 1)
-                        print("result")
-                        print(result)
+                    # if self._output_path is not None:
+                    #     self._recorded_frames_right.append(pcm_r)
+                        
+                    # pcm_l2 = frame['filt_l']
+                    # pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
+                    # # result_l2 = porcupine_l2.process(pcm_l2)
+
+                    # pcm_r2 = frame['filt_r']
+                    # pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
+                    # result_r2 = porcupine_r2.process(pcm_r2)
+
+                    # result = max(result_l, result_l2, result_r, result_r2)
+                
+                    print("true pr false")
+
+                    print("full boolean")
+                    print((self.__vad_enabled and ( (num_keywords == 1 and result) or self.__activate_vad_received )) or self.run_once)
+
+                    print("vad_enabled")
+                    print(self.__vad_enabled)
+                    print("num_keywords")
+                    print(num_keywords)
+                    print(num_keywords == 1)
+                    print("result")
+                    print(result)
 
                 if (self.__vad_enabled and ( (num_keywords == 1 and result) or self.__activate_vad_received )) or self.run_once:
                     print('[%s] detected keyword' % str(datetime.now()))
