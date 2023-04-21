@@ -128,8 +128,8 @@ def pv_keyword_files_subdir():
 
 def pv_keyword_paths(relative):
     keyword_files_dir = \
-        os.path.join('/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/pkgs/porcupine/resources/keyword_files', pv_keyword_files_subdir())
-        # os.path.join('/home/dominika/tiago_public_ws/src/ros/dialogflow/pkgs/porcupine/resources/keyword_files', pv_keyword_files_subdir())
+        os.path.join('/home/dominika/tiago_public_ws/src/ros/dialogflow/pkgs/porcupine/resources/keyword_files', pv_keyword_files_subdir())
+        # os.path.join('/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/pkgs/porcupine/resources/keyword_files', pv_keyword_files_subdir())
 
 
     res = dict()

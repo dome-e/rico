@@ -67,7 +67,7 @@ THR_UNVOICED     = 8 # stop recording after that many unvoiced/silence frames
 THR_TIME         = 5 # stop recording after that many seconds
 THR_POWER        = 120 # minimum volume (power) for voiced frames
 DO_NORMALIZE     = True # do normalize the output wave
-DEVICE_ID        = 13 #6 # device id
+DEVICE_ID        = 1 #6 # device id
 DATA_DIR         = os.path.join(os.path.dirname(__file__), '../data')
 SAMPLE_RATE_REC  = 16000
 SAMPLE_RATE_WORK = 16000
@@ -329,11 +329,12 @@ class PorcupineDemo(Thread):
             # configure audio stream
             pa = pyaudio.PyAudio()
             audio_stream = pa.open(
-                rate                = 44100,
+                # rate                = 44100, # moje semi-dzialajace
+                rate                = 16000, # z oryginalnego skryptu
                 # channels            = 2,
                 channels              = 1,
-                # format              = pyaudio.paInt16,
-                format=pa.get_format_from_width(wf.getsampwidth()),
+                format              = pyaudio.paInt16,
+                # format=pa.get_format_from_width(wf.getsampwidth()),
                 input               = True,
                 output              = True,
                 frames_per_buffer   = porcupine_l.frame_length,
@@ -378,14 +379,41 @@ class PorcupineDemo(Thread):
 
                 # for i in range(num_frames):
 
+                # pcm_l = frame['orig_l']
+                # print("type of pcm")
+                # print(type(pcm_l))
+                # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                # result = porcupine_l.process(pcm_l)
+
+                # if self._output_path is not None:
+                #     self._recorded_frames_left.append(pcm_l)
+
+
+
+
                 pcm_l = frame['orig_l']
-                print("type of pcm")
-                print(type(pcm_l))
                 pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
-                result = porcupine_l.process(pcm_l)
+                result_l = porcupine_l.process(pcm_l)
 
                 if self._output_path is not None:
                     self._recorded_frames_left.append(pcm_l)
+
+                pcm_r = frame['orig_r']
+                pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
+                result_r = porcupine_r.process(pcm_r)
+
+                if self._output_path is not None:
+                    self._recorded_frames_right.append(pcm_r)
+                    
+                pcm_l2 = frame['filt_l']
+                pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
+                result_l2 = porcupine_l2.process(pcm_l2)
+
+                pcm_r2 = frame['filt_r']
+                pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
+                result_r2 = porcupine_r2.process(pcm_r2)
+
+                result = max(result_l, result_l2, result_r, result_r2)
 
                 print("before checking result")
 
@@ -448,7 +476,11 @@ class PorcupineDemo(Thread):
 
                     self.play_name ='on'
                     print("before runvad")
+                    print("here the command after 'Hey Rico' id recorded")
                     # self.runvad()
+
+
+                    # ponizej jest chilowy mock runvad
                     fname = "/home/dominika/Downloads/record.wav"
                     if has_ros:
                         rospy.loginfo(fname)
@@ -458,11 +490,14 @@ class PorcupineDemo(Thread):
 
                         self.pub.publish(fname)
 
+
+
                     print("after runvad")
                     self.play_name='off'
                     self.__activate_vad_received = False
                     break
-
+                
+                # jesli cos zostalo wykryte a probujemy wykrywac wiecej niz 1 keyword 
                 elif num_keywords > 1 and result >= 0:
                     print('[%s] detected %s' % (str(datetime.now()), keyword_names[result]))
                     out_stream = pa.open(
