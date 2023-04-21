@@ -58,7 +58,7 @@ except:
 sys.path.append(os.path.join(os.path.dirname(__file__), '../pkgs/porcupine/binding/python'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../pkgs/porcupine/resources/util/python'))
 import pvporcupine
-from pvrecorder import PvRecorder
+# from pvrecorder import PvRecorder
 
 # from porcupine_py3.binding.python import Porcupine as pvporcupine
 # from porcupine_py3 import Porcupine as pvporcupine
@@ -366,10 +366,10 @@ class PorcupineDemo(Thread):
             print("set all the porcupine audio channels")
 
 
-            recorder = PvRecorder(
-                device_index=INPUT_DEVICE_ID,
-                frame_length=porcupine_l.frame_length)
-            recorder.start()
+            # recorder = PvRecorder(
+            #     device_index=INPUT_DEVICE_ID,
+            #     frame_length=porcupine_l.frame_length)
+            # recorder.start()
 
             # # configure audio stream
             # pa = pyaudio.PyAudio()
@@ -389,6 +389,35 @@ class PorcupineDemo(Thread):
             #     stream_callback     = self.audio_callback,
             # )
 
+            DURATION = 5  # seconds
+            INPUT_DEVICE_ID = 1
+            FORMAT = pyaudio.paInt16
+            CHANNELS = 2
+            RATE = 16000
+            CHUNK = 1024
+            RECORD_SECONDS = 5
+            WAVE_OUTPUT_FILENAME = "file.wav"
+            
+            p = pyaudio.PyAudio()
+
+            for i in range(p.get_device_count()):
+                dev = p.get_device_info_by_index(i)
+                print((i,dev['name'],dev['maxInputChannels']))
+
+            
+            # start Recording
+            stream = p.open(
+                format = FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                # output=True,
+                input_device_index=INPUT_DEVICE_ID,
+                # stream_callback=callback,
+                frames_per_buffer = CHUNK)
+
+            print ("recording...")
+            frames = []
 
             print("configured all audio streams")
 
@@ -406,35 +435,72 @@ class PorcupineDemo(Thread):
 
             # frames = []
 
-            output_wav_file = None
-            if self.output_path is not None:
-                output_wav_file = wave.open(self.output_path, "w")
-                output_wav_file.setnchannels(1)
-                output_wav_file.setsampwidth(2)
-                output_wav_file.setframerate(16000)
+            # output_wav_file = None
+            # if self.output_path is not None:
+            #     output_wav_file = wave.open(self.output_path, "w")
+            #     output_wav_file.setnchannels(1)
+            #     output_wav_file.setsampwidth(2)
+            #     output_wav_file.setframerate(16000)
 
-            print('Listening ... (press Ctrl+C to exit)')
+            # print('Listening ... (press Ctrl+C to exit)')
 
 
             while True:
                 if has_ros and rospy.is_shutdown():
                     print("has_ros and rospy is shutdown")
                     break
-                try:
-                    # for mic
-                    frame = self.recorded_frames.get(block=False)
+                # try:
                     
+                # for mic
+                print("recording to file")
+
+                for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+                    data = stream.read(CHUNK)
+                    frames.append(data)
+
+                print("finished recording")
+
+                stream.stop_stream()
+                stream.close()
+                p.terminate()
+
+                # frame = self.recorded_frames.get(block=False)
+
+                waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+                waveFile.setnchannels(CHANNELS)
+                waveFile.setsampwidth(p.get_sample_size(FORMAT))
+                waveFile.setframerate(RATE)
+                waveFile.writeframes(b''.join(frames))
+                waveFile.close()
+
+                audio = self.read_file(WAVE_OUTPUT_FILENAME, porcupine.sample_rate)
+                num_frames = len(audio) // porcupine.frame_length
+
+                
                     # for file
                     # audio_path = "/home/dzajac/inz/BscDominikaZajac/src/ros/dialogflow/data/test_recordings/1m.wav"
                     # audio = self.read_file(audio_path, porcupine.sample_rate)
                     # num_frames = len(audio) // porcupine.frame_length
 
-                except:
-                    continue
+                # except:
+                #     continue
 
                 print("przed for")
 
+                for i in range(num_frames):
+                    frame = audio[i * porcupine_l.frame_length:(i + 1) * porcupine_l.frame_length]
+                    result = porcupine_l.process(frame)
+                    # if result >= 0:
+                    #     print("resultttttttt")
+                    #     print(result)
+                    #     print("Detected '%s' at %.2f sec" %
+                    #     (keyword_names[result], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
 
+
+
+                # print("not detected")
+
+                # exit(1)
                 # pcm_l = frame['orig_l']
                 # print("type of pcm")
                 # print(type(pcm_l))
@@ -442,12 +508,27 @@ class PorcupineDemo(Thread):
                 # result = porcupine_l.process(pcm_l)
 
 
-                pcm_l = recorder.read()
-                result = porcupine.process(pcm_l)
+                # for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+                #     data = stream.read(CHUNK)
+                #     frames.append(data)
+                # print("finished recording")
+                
 
 
-                if output_wav_file is not None:
-                    output_wav_file.writeframes(struct.psck("h" * len(pcm_l), *pcm_l))
+                # # pcm_l = recorder.read()
+                # # result = porcupine.process(pcm_l)
+
+
+                # # if output_wav_file is not None:
+                # #     output_wav_file.writeframes(struct.psck("h" * len(pcm_l), *pcm_l))
+
+
+                # waveFile = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+                # waveFile.setnchannels(CHANNELS)
+                # waveFile.setsampwidth(p.get_sample_size(FORMAT))
+                # waveFile.setframerate(RATE)
+                # waveFile.writeframes(b''.join(frames))
+                # waveFile.close()
 
                 # if self._output_path is not None:
                 #     self._recorded_frames_left.append(pcm_l)
@@ -551,11 +632,18 @@ class PorcupineDemo(Thread):
             print('stopping ...')
 
         finally:
-            recorder.delete()
+            # recorder.delete()
 
-            if output_wav_file is not None:
-                output_wav_file.close()
+            # if output_wav_file is not None:
+            #     output_wav_file.close()
                 
+                            
+            # stop Recording
+            stream.stop_stream()
+            stream.close()
+            p.terminate()
+
+
             if porcupine_l is not None:
                 porcupine_l.delete()
 
