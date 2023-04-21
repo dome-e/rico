@@ -45,6 +45,7 @@ from scipy.signal import butter, lfilter, lfilter_zi
 from multiprocessing import Queue
 
 import platform
+
 has_ros = True
 try:
     import rospy
@@ -57,6 +58,8 @@ except:
 sys.path.append(os.path.join(os.path.dirname(__file__), '../pkgs/porcupine/binding/python'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../pkgs/porcupine/resources/util/python'))
 import pvporcupine
+from pvrecorder import PvRecorder
+
 # from porcupine_py3.binding.python import Porcupine as pvporcupine
 # from porcupine_py3 import Porcupine as pvporcupine
 # from porcupine import Porcupine as pvporcupine
@@ -323,14 +326,14 @@ class PorcupineDemo(Thread):
                     sensitivities      = self._sensitivities            )
 
             except pvporcupine.PorcupineInvalidArgumentError as e:
-                print("One or more arguments provided to Porcupine is invalid: ", args)
+                print("One or more arguments provided to Porcupine is invalid ",)
                 print("If all other arguments seem valid, ensure that '%s' is a valid AccessKey" % args.access_key)
                 raise e
             except pvporcupine.PorcupineActivationError as e:
                 print("AccessKey activation error")
                 raise e
             except pvporcupine.PorcupineActivationLimitError as e:
-                print("AccessKey '%s' has reached it's temporary device limit" % args.access_key)
+                print("AccessKey '%s' has reached it's temporary device limit")
                 raise e
             except pvporcupine.PorcupineActivationRefusedError as e:
                 print("AccessKey '%s' refused")
@@ -342,6 +345,18 @@ class PorcupineDemo(Thread):
                 print("Failed to initialize Porcupine")
                 raise e
 
+            keywords = list()
+            for x in self._keyword_file_paths:
+                keyword_phrase_part = os.path.basename(x).replace('.ppn', '').split('_')
+                if len(keyword_phrase_part) > 6:
+                    keywords.append(' '.join(keyword_phrase_part[0:-6]))
+                else:
+                    keywords.append(keyword_phrase_part[0])
+
+            print("keywords ", keywords)
+
+            print('Porcupine version: %s' % porcupine_l.version)
+
             # configure filtering 
             FILT_LOW       = 400
             FILT_HIGH      = 4000
@@ -350,23 +365,29 @@ class PorcupineDemo(Thread):
 
             print("set all the porcupine audio channels")
 
-            # configure audio stream
-            pa = pyaudio.PyAudio()
-            audio_stream = pa.open(
-                rate                = 44100,
-                channels            = 2,
-                # channels              = 1,
-                format              = pyaudio.paInt16,
-                # format=pa.get_format_from_width(wf.getsampwidth()),
-                input               = True,
-                # output              = True,
-                frames_per_buffer   = porcupine_l.frame_length,
-                # frames_per_buffer   = 1024,
 
-                input_device_index  = INPUT_DEVICE_ID,
-                # output_device_index = self._input_device_index,
-                stream_callback     = self.audio_callback,
-            )
+            recorder = PvRecorder(
+                device_index=INPUT_DEVICE_ID,
+                frame_length=porcupine_l.frame_length)
+            recorder.start()
+
+            # # configure audio stream
+            # pa = pyaudio.PyAudio()
+            # audio_stream = pa.open(
+            #     rate                = 44100,
+            #     channels            = 2,
+            #     # channels              = 1,
+            #     format              = pyaudio.paInt16,
+            #     # format=pa.get_format_from_width(wf.getsampwidth()),
+            #     input               = True,
+            #     # output              = True,
+            #     frames_per_buffer   = porcupine_l.frame_length,
+            #     # frames_per_buffer   = 1024,
+
+            #     input_device_index  = INPUT_DEVICE_ID,
+            #     # output_device_index = self._input_device_index,
+            #     stream_callback     = self.audio_callback,
+            # )
 
 
             print("configured all audio streams")
@@ -383,7 +404,17 @@ class PorcupineDemo(Thread):
 
             porcupine = porcupine_l
 
-            frames = []
+            # frames = []
+
+            output_wav_file = None
+            if self.output_path is not None:
+                output_wav_file = wave.open(self.output_path, "w")
+                output_wav_file.setnchannels(1)
+                output_wav_file.setsampwidth(2)
+                output_wav_file.setframerate(16000)
+
+            print('Listening ... (press Ctrl+C to exit)')
+
 
             while True:
                 if has_ros and rospy.is_shutdown():
@@ -403,16 +434,24 @@ class PorcupineDemo(Thread):
 
                 print("przed for")
 
-                # for i in range(num_frames):
 
-                pcm_l = frame['orig_l']
-                print("type of pcm")
-                print(type(pcm_l))
-                pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
-                result = porcupine_l.process(pcm_l)
+                # pcm_l = frame['orig_l']
+                # print("type of pcm")
+                # print(type(pcm_l))
+                # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                # result = porcupine_l.process(pcm_l)
 
-                if self._output_path is not None:
-                    self._recorded_frames_left.append(pcm_l)
+
+                pcm_l = recorder.read()
+                result = porcupine.process(pcm_l)
+
+
+                if output_wav_file is not None:
+                    output_wav_file.writeframes(struct.psck("h" * len(pcm_l), *pcm_l))
+
+                # if self._output_path is not None:
+                #     self._recorded_frames_left.append(pcm_l)
+
 
                 print("before checking result")
 
@@ -512,6 +551,11 @@ class PorcupineDemo(Thread):
             print('stopping ...')
 
         finally:
+            recorder.delete()
+
+            if output_wav_file is not None:
+                output_wav_file.close()
+                
             if porcupine_l is not None:
                 porcupine_l.delete()
 

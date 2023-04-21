@@ -3,7 +3,7 @@ import wave
 import pyaudio
 
 DURATION = 5  # seconds
-INPUT_DEVICE_INDEX = 1
+INPUT_DEVICE_ID = 1
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
@@ -25,7 +25,7 @@ stream = p.open(
     rate=RATE,
     input=True,
     # output=True,
-    input_device_index=INPUT_DEVICE_INDEX,
+    input_device_index=INPUT_DEVICE_ID,
     # stream_callback=callback,
     frames_per_buffer = CHUNK)
 
