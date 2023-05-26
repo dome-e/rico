@@ -18,6 +18,9 @@ try:
                     access_key         = access_key,
                     keyword_paths      = keyword_file_paths,
 )
+
+    print("sample rate", porcupine.sample_rate)
+    print("frame len", porcupine.frame_length)
     
     pa = pyaudio.PyAudio()
     audio_stream = pa.open(
@@ -30,6 +33,8 @@ try:
 
     while True:
         pcm = audio_stream.read(porcupine.frame_length)
+        # print("frame len", porcupine.frame_length)
+        # print("pcm len", len(pcm))
         pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
 
         # will return True or -1

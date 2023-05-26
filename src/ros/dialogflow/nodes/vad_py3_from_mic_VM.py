@@ -185,7 +185,7 @@ class PorcupineDemo(Thread):
             self.run_once_sub = rospy.Subscriber('/vad_run_once', Bool, self.__run_once_callback)
         else:
             self.pub = None
-        print("Done")
+        print("Initialization done.")
 
     def __activate_vad_callback(self, data):
         print('activate_vad_received')
@@ -218,12 +218,15 @@ class PorcupineDemo(Thread):
         return output
 
     def audio_callback(self, in_data, frame_count, time_info, status):
-        print("went into audio_callback!!")
-        print("len(in_data)", len(in_data))
-        print("frame count", frame_count)
+        # print("went into audio_callback!!")
+        # print(in_data)
+        # print("len(in_data)", len(in_data))
+        # print("frame count", frame_count)
 
         decoded_block = np.fromstring(in_data, 'Int16')
+        # co drugi od poczatku
         channel_left  = decoded_block[0::2]
+        # co drugi od drugiego elementu (od elem z indexem)
         channel_right = decoded_block[1::2]
 
 
@@ -237,12 +240,14 @@ class PorcupineDemo(Thread):
 
         (orig_left, filter_left)   = process_channel(channel_left)
         (orig_right, filter_right) = process_channel(channel_right)
+
+        # print("orig_left", len(orig_left))
         
-        print("audio_callback!! :33")
-        print("play_name?? UwU")
-        print(self.play_name)
+        # print("audio_callback!! :33")
+        # print("play_name?? UwU")
+        # print(self.play_name)
         if self.play_name == '':
-            print("PUTTING INTO recorded_frames")
+            # print("PUTTING INTO recorded_frames")
             self.recorded_frames.put({
                 'orig_l': orig_left,
                 'filt_l': filter_left,
@@ -296,7 +301,7 @@ class PorcupineDemo(Thread):
         for x in self._keyword_file_paths:
             keyword_names.append(os.path.basename(x).replace('.ppn', '').replace('_compressed', '').split('_')[0])
 
-        print('listening for:')
+        print('Listening for:')
         for keyword_name, sensitivity in zip(keyword_names, self._sensitivities):
             print('- %s (sensitivity: %f)' % (keyword_name, sensitivity))
 
@@ -311,10 +316,9 @@ class PorcupineDemo(Thread):
         wf = wave.open(os.path.join(DATA_DIR, 'snd_on.wav'), 'rb')
         wg = wave.open(os.path.join(DATA_DIR, 'snd_off.wav'), 'rb')
 
-        print("after loading open files")
         try:
             try:
-                # initialize porcupine module for each channel
+                # initialize Porcupine wake-word engine for each channel
                 porcupine_l = pvporcupine.create(
                     access_key         = self._access_key,
                     keyword_paths      = self._keyword_file_paths,
@@ -361,43 +365,43 @@ class PorcupineDemo(Thread):
                 else:
                     keywords.append(keyword_phrase_part[0])
 
-            print("keywords ", keywords)
-
-            print('Porcupine version: %s' % porcupine_l.version)
-
             # configure filtering 
             FILT_LOW       = 400
             FILT_HIGH      = 4000
             self.b, self.a = butter_bandpass(FILT_LOW, FILT_HIGH, SAMPLE_RATE_WORK, order=5)
             self.zi        = lfilter_zi(self.b, self.a)
 
-            print("set all the porcupine audio channels")
 
 
             porcupine = porcupine_l
 
+            # print("sample rate", porcupine.sample_rate)
+            # print("frame len", porcupine.frame_length)
 
             # # configure audio stream
             p = pyaudio.PyAudio()
+
+            
           
             audio_stream = p.open(
-                # format             = FORMAT,
                 format             = pyaudio.paInt16,
-                # channels           = CHANNELS,
-                channels            = 1,
-                # rate               = RATE,
-                rate               = porcupine.sample_rate,
+
+                # with callback
+                channels           = 2,
+
+                # no callback
+                # channels            = 1,
+
+
+                rate               = porcupine_l.sample_rate,
                 input              = True,
-                # output=True,
-                # input_device_index = INPUT_DEVICE_ID,
-                # stream_callback    = self.audio_callback,
-                # frames_per_buffer  = CHUNK)
-                frames_per_buffer  = porcupine.frame_length)
+                stream_callback    = self.audio_callback,
+                frames_per_buffer  = porcupine_l.frame_length)
 
 
-            for i in range(p.get_device_count()):
-                dev = p.get_device_info_by_index(i)
-                print((i,dev['name'],dev['maxInputChannels']))
+            # for i in range(p.get_device_count()):
+            #     dev = p.get_device_info_by_index(i)
+            #     print((i,dev['name'],dev['maxInputChannels']))
 
 
 
@@ -418,49 +422,93 @@ class PorcupineDemo(Thread):
                     print("has_ros and rospy is shutdown")
                     break
                     
-                # for mic
-                pcm = audio_stream.read(porcupine.frame_length)
-                pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
 
-                keyword_index = porcupine.process(pcm)
+                # with callback
 
+                try:
+                    frame = self.recorded_frames.get(block=False)
+                except:
+                    continue
+
+
+                # no callback
+                # pcm_l = audio_stream.read(porcupine_l.frame_length)
+
+
+                # print("frame len", porcupine_l.frame_length)
+                # print("pcm len", len(pcm_l))
+
+                # with callback
+                pcm_l = frame['orig_l']
+                pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
+                result_l = porcupine_l.process(pcm_l)
+
+                if self._output_path is not None:
+                    self._recorded_frames_left.append(pcm_l)
+
+                pcm_r = frame['orig_r']
+                pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
+                result_r = porcupine_r.process(pcm_r)
+
+                if self._output_path is not None:
+                    self._recorded_frames_right.append(pcm_r)
+                    
+                pcm_l2 = frame['filt_l']
+                pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
+                result_l2 = porcupine_l2.process(pcm_l2)
+
+                pcm_r2 = frame['filt_r']
+                pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
+                result_r2 = porcupine_r2.process(pcm_r2)
+
+                keyword_index = max(result_l, result_l2, result_r, result_r2)
+                # print(keyword_index)
+
+
+                # keyword_index = result_l
                 result = True if keyword_index==0 else False
 
-                if result :
-                    print("RESULT IS >= 0")
-                    print(result)
-                    print("Detected '%s' at %.2f sec" %
-                    (keyword_names[keyword_index], float(i * porcupine_l.frame_length) / float(porcupine_l.sample_rate)))
+                if result:
+                    print("Detected '%s' at %s" %
+                    (keyword_names[keyword_index], str(datetime.now())))
 
-                    # BELOW all other porcupine cases (porcupine_l, porcupine_r, etc)
-                    '''
-                    # print("po for ;3")
-                    # pcm_l = frame['orig_l']
-                    # pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
-                    # # result_l = porcupine_l.process(pcm_l)
+                    print("result_l", result_l, "result_r", result_r )
+                    print("result_l2", result_l2, "result_r2", result_r2 )
 
-                    # if self._output_path is not None:
-                    #     self._recorded_frames_left.append(pcm_l)
+                    self.run_once = False
 
-                    # # pcm_r = frame['orig_r']
-                    # pcm_r = struct.unpack_from("h" * porcupine_r.frame_length, pcm_r)
-                    # # result_r = porcupine_r.process(pcm_r)
+                    # turn into human direction
+                    print("turn to human")
+                    # goal = TurnToHumanGoal()
+                    # self.client.send_goal(goal)
+                    # self.client.wait_for_result()
 
-                    # if self._output_path is not None:
-                    #     self._recorded_frames_right.append(pcm_r)
-                        
-                    # pcm_l2 = frame['filt_l']
-                    # pcm_l2 = struct.unpack_from("h" * porcupine_l2.frame_length, pcm_l2)
-                    # # result_l2 = porcupine_l2.process(pcm_l2)
+                    # record human voice
+                    print("record human voice")
 
-                    # pcm_r2 = frame['filt_r']
-                    # pcm_r2 = struct.unpack_from("h" * porcupine_r2.frame_length, pcm_r2)
-                    # result_r2 = porcupine_r2.process(pcm_r2)
+                    print("play ON")
+                    self.play_name ='on'
+                    print("before runvad")
+                    print("human makes a request")
+                    self.runvad()
 
-                    # result = max(result_l, result_l2, result_r, result_r2)
-                    '''
-                    # END all other porcupine cases (porcupine_l, porcupine_r, etc)
 
+                    # fname = "/home/dominika/Downloads/record.wav"
+                    # if has_ros:
+                    #     rospy.loginfo(fname)
+                    #     rospy.sleep(10)
+                    #     print("connectrions:")
+                    #     print(self.pub.get_num_connections())
+
+                    #     self.pub.publish(fname)
+
+                    print("after runvad")
+                    print("play OFF")
+
+                    self.play_name='off'
+                    self.__activate_vad_received = False
+                    break
+                    
                 # BELOW ARE cases when result is not True????
                 ''' 
                 if (self.__vad_enabled and ( (num_keywords == 1 and result>=0) or self.__activate_vad_received )) or self.run_once:
@@ -618,13 +666,11 @@ class PorcupineDemo(Thread):
                 ignore = ignore - 1
                 continue
 
-            print("reading chinks")
             chunk_left       = data['orig_l']
             chunk_right      = data['orig_r']
             filtered_left    = data['filt_l'][0:960]
             filtered_right   = data['filt_r'][0:960]
 
-            print("chunk_left")
             decoded_block_left  = np.fromstring(filtered_left, 'Int16')
             decoded_block_right = np.fromstring(filtered_right, 'Int16')
  
@@ -704,7 +750,7 @@ class PorcupineDemo(Thread):
                 now = datetime.now()
                 fname = now.strftime("/tmp/%m-%d-%Y-%H-%M-%S") + ".wav"
                 print(fname)
-                record_to_file(fname, (raw_data_left, raw_data_right), 2, RATE)
+                # record_to_file(fname, (raw_data_left, raw_data_right), 2, RATE)
                 print("Saved to " + fname)
                 if has_ros:
                     self.pub.publish(fname)
@@ -726,11 +772,6 @@ class PorcupineDemo(Thread):
         pa.terminate()
 
 def main():
-
-    print("VAD STARTING....")
-    print("python version")
-    print(platform.python_version())
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--keywords',                 help='comma-separated list of default keywords (%s)' % ', '.join(KEYWORDS))
     parser.add_argument('--keyword_file_paths',       help='comma-separated absolute paths to keyword files')
@@ -741,8 +782,7 @@ def main():
     parser.add_argument('--output_path',              help='absolute path to where recorded audio will be stored. If not set, it will be bypassed.')
     parser.add_argument('--show_audio_devices_info',  action='store_true')
 
-    print("Audio devices info")
-
+    # print("Audio devices info")
     # PorcupineDemo.show_audio_devices_info()
 
 
