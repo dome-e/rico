@@ -301,9 +301,9 @@ class PorcupineDemo(Thread):
         for x in self._keyword_file_paths:
             keyword_names.append(os.path.basename(x).replace('.ppn', '').replace('_compressed', '').split('_')[0])
 
-        print('Listening for:')
-        for keyword_name, sensitivity in zip(keyword_names, self._sensitivities):
-            print('- %s (sensitivity: %f)' % (keyword_name, sensitivity))
+        # print('listening for:')
+        # for keyword_name, sensitivity in zip(keyword_names, self._sensitivities):
+        #     print('- %s (sensitivity: %f)' % (keyword_name, sensitivity))
 
         porcupine_l = None
         porcupine_l2 = None
@@ -373,26 +373,17 @@ class PorcupineDemo(Thread):
 
 
 
-            porcupine = porcupine_l
 
             # print("sample rate", porcupine.sample_rate)
             # print("frame len", porcupine.frame_length)
 
             # # configure audio stream
             p = pyaudio.PyAudio()
-
             
           
             audio_stream = p.open(
                 format             = pyaudio.paInt16,
-
-                # with callback
                 channels           = 2,
-
-                # no callback
-                # channels            = 1,
-
-
                 rate               = porcupine_l.sample_rate,
                 input              = True,
                 stream_callback    = self.audio_callback,
@@ -412,9 +403,6 @@ class PorcupineDemo(Thread):
                 'on': np.fromstring(wav_data, 'Int16'),
                 'off': np.fromstring(wav2_data, 'Int16')
             }
-
-            print("configured all audio streams")
-            print("stream opened")
             
 
             while True:
@@ -423,22 +411,12 @@ class PorcupineDemo(Thread):
                     break
                     
 
-                # with callback
-
                 try:
                     frame = self.recorded_frames.get(block=False)
                 except:
                     continue
 
 
-                # no callback
-                # pcm_l = audio_stream.read(porcupine_l.frame_length)
-
-
-                # print("frame len", porcupine_l.frame_length)
-                # print("pcm len", len(pcm_l))
-
-                # with callback
                 pcm_l = frame['orig_l']
                 pcm_l = struct.unpack_from("h" * porcupine_l.frame_length, pcm_l)
                 result_l = porcupine_l.process(pcm_l)
@@ -465,7 +443,6 @@ class PorcupineDemo(Thread):
                 # print(keyword_index)
 
 
-                # keyword_index = result_l
                 result = True if keyword_index==0 else False
 
                 if result:
