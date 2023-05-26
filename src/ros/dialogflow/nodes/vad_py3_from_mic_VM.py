@@ -309,7 +309,7 @@ class PorcupineDemo(Thread):
 
         try:
             try:
-                # initialize Porcupine wake-word engine for each channel
+                # initialize Porcupine wake-word engine for each recording
                 porcupine_l = pvporcupine.create(
                     access_key         = self._access_key,
                     keyword_paths      = self._keyword_file_paths,
