@@ -23,6 +23,7 @@ from calendar import c
 import itertools
 import multiprocessing
 import os
+import re
 import string
 import struct
 import sys
@@ -218,11 +219,6 @@ class PorcupineDemo(Thread):
         return output
 
     def audio_callback(self, in_data, frame_count, time_info, status):
-        # print("went into audio_callback!!")
-        # print(in_data)
-        # print("len(in_data)", len(in_data))
-        # print("frame count", frame_count)
-
         decoded_block = np.fromstring(in_data, 'Int16')
         # co drugi od poczatku
         channel_left  = decoded_block[0::2]
@@ -241,11 +237,6 @@ class PorcupineDemo(Thread):
         (orig_left, filter_left)   = process_channel(channel_left)
         (orig_right, filter_right) = process_channel(channel_right)
 
-        # print("orig_left", len(orig_left))
-        
-        # print("audio_callback!! :33")
-        # print("play_name?? UwU")
-        # print(self.play_name)
         if self.play_name == '':
             # print("PUTTING INTO recorded_frames")
             self.recorded_frames.put({
@@ -372,11 +363,6 @@ class PorcupineDemo(Thread):
             self.zi        = lfilter_zi(self.b, self.a)
 
 
-
-
-            # print("sample rate", porcupine.sample_rate)
-            # print("frame len", porcupine.frame_length)
-
             # # configure audio stream
             p = pyaudio.PyAudio()
             
@@ -389,6 +375,8 @@ class PorcupineDemo(Thread):
                 stream_callback    = self.audio_callback,
                 frames_per_buffer  = porcupine_l.frame_length)
 
+
+            # Listing all available devices
 
             # for i in range(p.get_device_count()):
             #     dev = p.get_device_info_by_index(i)
@@ -405,12 +393,13 @@ class PorcupineDemo(Thread):
             }
             
 
+            print("Awaiting wake word...")
+
             while True:
                 if has_ros and rospy.is_shutdown():
                     print("has_ros and rospy is shutdown")
                     break
                     
-
                 try:
                     frame = self.recorded_frames.get(block=False)
                 except:
@@ -445,110 +434,46 @@ class PorcupineDemo(Thread):
 
                 result = True if keyword_index==0 else False
 
-                if result:
+
+                if (self.__vad_enabled  and result):
                     print("Detected '%s' at %s" %
                     (keyword_names[keyword_index], str(datetime.now())))
 
-                    print("result_l", result_l, "result_r", result_r )
-                    print("result_l2", result_l2, "result_r2", result_r2 )
+                    print("result_l  " , result_l, "result_r  ", result_r )
+                    print("result_l2" , result_l2, "result_r2 ", result_r2 )
 
                     self.run_once = False
 
-                    # turn into human direction
-                    print("turn to human")
+                    # Turn into human direction
+                    print("Turning to human...")
                     # goal = TurnToHumanGoal()
                     # self.client.send_goal(goal)
                     # self.client.wait_for_result()
 
-                    # record human voice
-                    print("record human voice")
 
                     print("play ON")
                     self.play_name ='on'
-                    print("before runvad")
-                    print("human makes a request")
+
+                    # Record human voice
                     self.runvad()
 
 
+                    # Saving recorded command to file + publishing
                     # fname = "/home/dominika/Downloads/record.wav"
                     # if has_ros:
                     #     rospy.loginfo(fname)
                     #     rospy.sleep(10)
                     #     print("connectrions:")
                     #     print(self.pub.get_num_connections())
-
                     #     self.pub.publish(fname)
 
-                    print("after runvad")
-                    print("play OFF")
-
-                    self.play_name='off'
-                    self.__activate_vad_received = False
-                    break
                     
-                # BELOW ARE cases when result is not True????
-                ''' 
-                if (self.__vad_enabled and ( (num_keywords == 1 and result>=0) or self.__activate_vad_received )) or self.run_once:
-                    print("self.run_once ", self.run_once)
-                    print("self.__vad_enabled ", self.__vad_enabled)
-                    print("result ", result )
-                    print("self.__activate_vad_received ", self.__activate_vad_received)
-                    print("if ", num_keywords == 1)
-                    print('[%s] ddetected keyword' % str(datetime.now()))
-                    self.run_once = False
-
-                    # turn into human direction
-                    print("turn to human")
-                    # goal = TurnToHumanGoal()
-                    # self.client.send_goal(goal)
-                    # self.client.wait_for_result()
-
-                    # record human voice
-                    print("record human voice")
-
-                    print("play ON")
-                    self.play_name ='on'
-                    print("before runvad")
-                    print("human makes a request")
-                    # self.runvad()
-
-
-                    fname = "/home/dominika/Downloads/record.wav"
-                    if has_ros:
-                        rospy.loginfo(fname)
-                        rospy.sleep(10)
-                        print("connectrions:")
-                        print(self.pub.get_num_connections())
-
-                        self.pub.publish(fname)
-
-                    print("after runvad")
                     print("play OFF")
 
                     self.play_name='off'
                     self.__activate_vad_received = False
-                    break
-
-                elif num_keywords > 1 and result >= 0:
-                    print('[%s] detected %s' % (str(datetime.now()), keyword_names[result]))
-                    out_stream = pa.open(
-                        format   = pa.get_format_from_width(wf.getsampwidth()),
-                        channels = wf.getnchannels(),
-                        rate     = wf.getframerate(),
-                        output   = True
-                    )
-                    out_stream.write(wav_data)
-                    pa.close()
-                    break
-                '''
-                #END OF cases when result is not True????
-
-                # print("not detected")
-                # print("---------------------------")
-                # break
-                # exit(1)
-
-
+                    # break
+                    result = False
             
         except KeyboardInterrupt:
             print('stopping ...')
@@ -585,7 +510,7 @@ class PorcupineDemo(Thread):
 
     def runvad(self):
         RATE                  = SAMPLE_RATE_WORK
-        CHUNK_DURATION_MS     = 10#30 # supports 10, 20 and 30 (ms)
+        CHUNK_DURATION_MS     = 10 #30 # supports 10, 20 and 30 (ms)
         PADDING_DURATION_MS   = 1500 # 1 sec jugement
         NUM_PADDING_CHUNKS    = int(PADDING_DURATION_MS / CHUNK_DURATION_MS)
         NUM_WINDOW_CHUNKS     = int(400 / CHUNK_DURATION_MS)  # 400 ms / 30ms
@@ -616,8 +541,8 @@ class PorcupineDemo(Thread):
         TimeUse        = 0
         cancelled      = False
 
-        print("python version")
-        print(platform.python_version())
+        # print("python version")
+        # print(platform.python_version())
         print("* recording: ")
 
         num_unv = 0
@@ -639,7 +564,7 @@ class PorcupineDemo(Thread):
                 continue
 
             if ignore > 0:
-                print("went into ignore")
+                # print("went into ignore")
                 ignore = ignore - 1
                 continue
 
